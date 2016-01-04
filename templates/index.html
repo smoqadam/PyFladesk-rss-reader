@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Flask Desktop Application</title>
+
+
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <div id="sidebar-wrapper">
+            <h3 class="text-center" style="margin-top: 40px;"><img class="img-circle" src="{{ url_for('static',filename='images/icon-48.png') }}"/> RSS Reader</h3>
+           
+            <div class="row add-rss">
+                <div class="col-md-12 ">
+                    <div class="input-group">
+                        <input type="text" id="rssLink" class="form-control input-sm" placeholder="Add new RSS" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-success addRssBtn btn-sm"><i class="glyphicon glyphicon-plus"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="site-lists ">
+                        {% for feed in feeds %}
+                            <li><a href="{{ feed.url }}" class="rss-link" title="{{feed.title}}">{{feed.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        
+                        <a href="#menu-toggle" class="btn btn-warning btn-sm " id="menu-toggle">
+                            <span class="glyphicon glyphicon-menu-hamburger"></span>
+                        </a> 
+                        <h1>Posts</h1>
+                        
+                        <div class="posts">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    
+    </div>
+
+        <div class="footer">
+            <div class="footer-content">
+                <p class="text-muted">Created By <a href="">PyFladesk</a> Under MIT Liesence. View source on <a href="">GitHub</a>.</p>                
+            </div>
+        </div>
+
+ <div class="loading">Loading...</div>    
+
+    <script src="{{ url_for('static',filename='js/jquery-1.11.0.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.js') }}"></script>
+
+    <script>
+        $(function(){
+            $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            
+            $("#wrapper").toggleClass("toggled");
+        });
+        
+        
+        $('.addRssBtn').click(function(){
+            url = $('#rssLink').val();
+            $('.loading').show();
+            $.post('/add',{url:url },function(data){
+                if(data.response == 'ok'){
+                    console.log(data)
+                    $('ul.site-lists ').append('<li><a href="#" class="rss-link" title="'+data.title+'">'+data.title+'</a></li>');
+                }else{
+                    alert(data.response);
+                }
+                $('.loading').hide();
+            },'json');
+        })
+        
+        $('a.rss-link').click(function(e){
+            e.preventDefault();
+            $('.loading').show();
+            url = $(this).attr('href');
+            $.post('/fetch',{url:url},function(data){
+                if(data.response == 'ok'){
+                    $('.posts').html(data.result);
+                    $('.loading').hide();
+                }
+            },'json')
+        })
+        
+    })
+    </script>
+</body>
+
+</html>

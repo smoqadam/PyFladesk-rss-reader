@@ -1,0 +1,170 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #333;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    color:#eee;
+     font-family: "Segoe UI"
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+   
+}
+
+
+ul.site-lists{
+    list-style: none;
+    padding:0;
+}
+
+ul.site-lists li{
+    overflow: hidden;
+    text-overflow: ellipsis 
+
+}
+ul.site-lists li a {
+    text-decoration: none;
+    color: #eee;
+    white-space: nowrap;
+    white-space: #f00;
+    padding:5px;
+}
+
+ul.site-lists li a:hover {
+        text-decoration: underline;
+}
+
+
+#sidebar-wrapper .row{
+    margin:10px 0;
+    padding:10px 0;
+}
+
+#sidebar-wrapper .add-rss{
+     margin-top: 30px;
+}
+
+.post{
+    width:100%;
+    border:1px solid #ccc;
+    border-radius: 3px;
+    margin:5px 0;
+    padding:10px;
+}
+.post img{
+    max-width: 100%
+}
+
+.footer {
+    height: 40px;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background-color: #F5F5F5;
+    line-height: 40px;
+    padding-left: 10px;
+    
+}
+
+.loading{
+    
+    height: 20px;
+    position: fixed;
+    margin-left: 50%;
+    top:0;
+    padding-left:18px;
+    font-weight: bold;
+    color:#f92343;
+    width:100%;
+    background: url(../images/ajax-loader.gif) no-repeat left;
+    display: none;
+    /*background-color:#eee;*/
+}
+ 
+#menu-toggle{
+    margin-top: -5px;
+}
+
+ 
+@media(min-width:768px) {
+    .footer{
+    padding-left: 260px;
+    }
+    
+ 
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
