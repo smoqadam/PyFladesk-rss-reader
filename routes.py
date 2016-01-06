@@ -17,14 +17,14 @@ def index():
 
 @app.route('/add',methods=['POST'])
 def add():
-    output = {"title":"","response":""}
+    output = {"title":"",'id':'',"response":""}
     url = request.form['url']
     feed = feedparser.parse(url)
     try:
         title = feed['feed']['title']
         
         db = DB()
-        db.insert(url,title)
+        output['id'] = db.insert(url,title)
         
         output['title'] = title
         output['response'] = 'ok'
@@ -52,3 +52,17 @@ def fetch():
     output['response'] = 'ok'
     output['result'] =   body.encode('utf8')   
     return json.dumps(output, ensure_ascii=False) 
+    
+    
+    
+
+
+@app.route('/delete',methods=['POST'])
+def delete():
+    id = request.form['id']
+    output = {'response':'','result':'','ID':id}
+    # return json.dumps(output)
+    db = DB()
+    db.delete(id)
+    output['response'] = 'ok'
+    return json.dumps(output)  

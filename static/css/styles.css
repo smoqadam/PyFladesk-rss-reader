@@ -136,6 +136,13 @@ ul.site-lists li a:hover {
 }
 
  
+a.delete span{
+    color:#ff5100;
+    font-size: 10px; 
+}
+a.delete span:hover{
+    color:#ff1100;
+}
 @media(min-width:768px) {
     .footer{
     padding-left: 260px;

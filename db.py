@@ -27,9 +27,10 @@ class DB:
         
     def insert(self,url,title):
         self.execute("INSERT INTO feeds (url,title) VALUES (?,?)",(url,title))
+        return self.cursor.lastrowid
 
     def delete(self,id):
-        self.execute("DELETE FROM feeds WHERE _id = ?",(id))    
+        self.execute("DELETE FROM feeds WHERE _id = {}".format(id))    
 
     def selectall(self,where='1=1'):
         

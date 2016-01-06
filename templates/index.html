@@ -32,7 +32,7 @@
                 <div class="col-md-12">
                     <ul class="site-lists ">
                         {% for feed in feeds %}
-                            <li><a href="{{ feed.url }}" class="rss-link" title="{{feed.title}}">{{feed.title}}</a></li>
+                            <li><a href="javascript:;" class="delete" id="id_{{ feed._id }}" title="Delete!"><span class="glyphicon glyphicon-remove"></span></a><a href="{{ feed.url }}" class="rss-link" title="{{feed.title}}">{{feed.title}}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         
-                        <a href="#menu-toggle" class="btn btn-warning btn-sm " id="menu-toggle">
+                        <a class="btn btn-warning btn-sm " id="menu-toggle">
                             <span class="glyphicon glyphicon-menu-hamburger"></span>
                         </a> 
                         <h1>Posts</h1>
@@ -73,29 +73,31 @@
     <script src="{{ url_for('static',filename='js/bootstrap.js') }}"></script>
 
     <script>
-        $(function(){
-            $("#menu-toggle").click(function(e) {
-            e.preventDefault();
+ 
+ $(function(){
+            $("a#menu-toggle").click(function(e) {
+                e.preventDefault();
             
-            $("#wrapper").toggleClass("toggled");
-        });
-        
-        
-        $('.addRssBtn').click(function(){
+                $("#wrapper").toggleClass("toggled");
+
+            });
+            
+            
+         $('.addRssBtn').click(function(){
             url = $('#rssLink').val();
             $('.loading').show();
             $.post('/add',{url:url },function(data){
                 if(data.response == 'ok'){
                     console.log(data)
-                    $('ul.site-lists ').append('<li><a href="#" class="rss-link" title="'+data.title+'">'+data.title+'</a></li>');
+                    $('ul.site-lists ').append('<li><a href="#" class="delete" id="id_'+data.id+'" title="Delete!"><span class="glyphicon glyphicon-remove"></span></a><a href="'+url+'" class="rss-link" title="'+data.title+'">'+data.title+'</a></li>');
                 }else{
                     alert(data.response);
                 }
                 $('.loading').hide();
             },'json');
-        })
+        });
         
-        $('a.rss-link').click(function(e){
+        $(document).on('click','a.rss-link',function(e){
             e.preventDefault();
             $('.loading').show();
             url = $(this).attr('href');
@@ -105,9 +107,84 @@
                     $('.loading').hide();
                 }
             },'json')
-        })
+        });        
         
-    })
+         $(document).on('click','a.delete',function(e){
+            e.preventDefault();
+            $('.loading').show();
+            if(confirm('Are you sure ?')){
+                id = $(this).attr('id').replace('id_','');
+                $this = $(this);
+                $.post('/delete',{id:id},function(data){
+                     if(data.response == 'ok'){
+                        $($this).parent().hide('slow');
+                        $('.loading').hide();
+                    }
+                },'json');
+            }
+        }) ;
+ });
+ 
+
+        // function toggleMenu(){
+        //     $("#menu-toggle").click(function(e) {
+        //         e.preventDefault();
+            
+        //         $("#wrapper").toggleClass("toggled");
+        //         return false;
+        //     });
+        // }
+        
+        // function addNewLink(){
+        //  $('.addRssBtn').click(function(){
+        //     url = $('#rssLink').val();
+        //     $('.loading').show();
+        //     $.post('/add',{url:url },function(data){
+        //         if(data.response == 'ok'){
+        //             console.log(data)
+        //             $('ul.site-lists ').append('<li><a href="#" class="delete" id="id_'+data.id+'" title="Delete!"><span class="glyphicon glyphicon-remove"></span></a><a href="'+url+'" class="rss-link" title="'+data.title+'">'+data.title+'</a></li>');
+        //         }else{
+        //             alert(data.response);
+        //         }
+        //         $('.loading').hide();
+        //     },'json');
+        // })
+        // }
+ 
+        
+        
+
+        // function fetch(){
+        //     $(document).on('click','a.rss-link',function(e){
+        //     e.preventDefault();
+        //     $('.loading').show();
+        //     url = $(this).attr('href');
+        //     $.post('/fetch',{url:url},function(data){
+        //         if(data.response == 'ok'){
+        //             $('.posts').html(data.result);
+        //             $('.loading').hide();
+        //         }
+        //     },'json')
+        // });
+        // }
+        
+        // function del(){
+        //   $(document).on('click','a.delete',function(e){
+        //     e.preventDefault();
+        //     $('.loading').show();
+        //     if(confirm('Are you sure ?')){
+        //         id = $(this).attr('id').replace('id_','');
+        //         $this = $(this);
+        //         $.post('/delete',{id,id},function(data){
+        //             if(data.response == 'ok'){
+        //                 $($this).parent().hide('slow');
+        //                 $('.loading').hide();
+        //             }
+        //         },'json')
+        //     }
+        // })  
+        // }
+         
     </script>
 </body>
 

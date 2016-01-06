@@ -49,11 +49,12 @@ class WebView(QWebView):
     def contextMenuEvent(self,e):
         pass
 
-
-# open links in default browser 
-# stolen from http://stackoverflow.com/a/3188942/1103397 :D
-def linkClicked(url): 
-    webbrowser.open(url.toEncoded().data())
+    # open links in default browser 
+    # stolen from http://stackoverflow.com/a/3188942/1103397 :D
+    def linkClicked(self,url): 
+        # url = url.toEncoded().data()
+        # if url.find('localhost') == -1:
+        webbrowser.open(url.toEncoded().data())
     
 
 def provide_GUI_for(application):
@@ -72,8 +73,8 @@ def provide_GUI_for(application):
     mainWindow.webView.load(QUrl(ROOT_URL))
     
     # prevent open urls in QWebView
-    mainWindow.webView.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
-    mainWindow.webView.connect(mainWindow.webView, SIGNAL("linkClicked (const QUrl&)"), linkClicked)
+    mainWindow.webView.page().setLinkDelegationPolicy(QWebPage.DelegateExternalLinks)
+    mainWindow.webView.connect(mainWindow.webView, SIGNAL("linkClicked (const QUrl&)"),mainWindow.webView.linkClicked)
     mainWindow.show()
 
     return qtapp.exec_()
