@@ -32,7 +32,7 @@
                 <div class="col-md-12">
                     <ul class="site-lists ">
                         {% for feed in feeds %}
-                            <li><a href="javascript:;" class="delete" id="id_{{ feed._id }}" title="Delete!"><span class="glyphicon glyphicon-remove"></span></a><a href="{{ feed.url }}" class="rss-link" title="{{feed.title}}">{{feed.title}}</a></li>
+                            <li><a href="#" class="delete" id="id_{{ feed._id }}" title="Delete!"><span class="glyphicon glyphicon-remove"></span></a><a href="{{ feed.url }}" class="rss-link" title="{{feed.title}}">{{feed.title}}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -48,7 +48,7 @@
                         <a class="btn btn-warning btn-sm " id="menu-toggle">
                             <span class="glyphicon glyphicon-menu-hamburger"></span>
                         </a> 
-                        <h1>Posts</h1>
+                        <h2 class="posts-header">Posts</h2>
                         
                         <div class="posts">
 
@@ -101,6 +101,7 @@
             e.preventDefault();
             $('.loading').show();
             url = $(this).attr('href');
+            $('h2.posts-header').html($(this).attr('title'));
             $.post('/fetch',{url:url},function(data){
                 if(data.response == 'ok'){
                     $('.posts').html(data.result);

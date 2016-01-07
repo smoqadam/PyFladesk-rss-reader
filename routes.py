@@ -43,10 +43,10 @@ def fetch():
     feed = feedparser.parse(url)
     output = {'response':'','result':''}
     body = ''
-    for post in feed.entries:
+    for post in feed.entries:       
         body += u'<div class="post">'
         body += u'<h3 class="post-title"><a href="{}">{}</a></h3>'.format(post.link,post.title)
-        body += u'<div class="post-body">{}</div>'.format(post.summary_detail.value)
+        body += u'<div class="post-body">{}</div>'.format(post.summary)
         body += u'</div>'
         
     output['response'] = 'ok'
