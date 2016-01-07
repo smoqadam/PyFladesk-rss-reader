@@ -5,8 +5,7 @@ RSS links save in sqlite database and using AJAX to fetch RSS data.
 
 I packed it with pyinstaller and works fine in Windows 7. 
 
-![capture](https://cloud.githubusercontent.com/assets/1223848/12103618/fe436b82-b358-11e5-8f86-cc8710531c60.JPG)
-
+![capture](https://cloud.githubusercontent.com/assets/1223848/12180868/3a54e622-b594-11e5-96d5-acd33424d676.JPG)
 
 for make an executable file with `pyinstaller` you can use the spec file includes in repository.
 
