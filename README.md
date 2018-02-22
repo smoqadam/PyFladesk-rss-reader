@@ -1,4 +1,4 @@
-# This app works with previous version of PyFladesk which used PyQt4. PyFladesk currently workes with PyQt5 and this app does not work anymore
+## This app works with previous version of PyFladesk which used PyQt4. PyFladesk currently workes with PyQt5 and this app does not work anymore
 
 ### PyFladesk Rss Reader 
 
