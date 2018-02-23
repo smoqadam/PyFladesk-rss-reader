@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 from db import DB
 import feedparser
 import json
+import sys
+
 
 app = Flask(__name__)
 
@@ -39,20 +41,23 @@ def add():
 
 @app.route('/fetch',methods=['POST'])
 def fetch():
-    url = request.form['url']
-    feed = feedparser.parse(url)
-    output = {'response':'','result':''}
-    body = ''
-    for post in feed.entries:       
-        body += u'<div class="post">'
-        body += u'<h3 class="post-title"><a href="{}">{}</a></h3>'.format(post.link,post.title)
-        body += u'<div class="post-body">{}</div>'.format(post.summary)
-        body += u'</div>'
-        
-    output['response'] = 'ok'
-    output['result'] =   body.encode('utf8')   
-    return json.dumps(output, ensure_ascii=False) 
-    
+    try:
+        url = request.form['url']
+        feed = feedparser.parse(url)
+        output = {'response':'','result':''}
+        body = ''
+        for post in feed.entries:
+            body += u'<div class="post">'
+            body += u'<h3 class="post-title"><a href="{}">{}</a></h3>'.format(post.link,post.title)        
+            body += u'<div class="post-body">{}</div>'.format(post.summary)
+            body += u'</div>'
+        output['response'] = 'ok'
+        output['result'] = body.encode('utf8')   
+        output['result'] = output['result'].decode('utf8')
+        return json.dumps(output, ensure_ascii=False)
+    except:
+        print( "Unexpected error:", sys.exc_info()[0])
+        raise
     
     
 
